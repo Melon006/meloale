@@ -1,14 +1,12 @@
-/* =========================
-   🎶 CONTINUOUS MUSIC SYSTEM
-========================= */
+/* 🎶 Continuous music */
 const music = document.getElementById("bgMusic");
 
 function startMusic() {
-  const savedTime = sessionStorage.getItem("musicTime");
-  const savedVolume = sessionStorage.getItem("musicVolume");
+  const t = sessionStorage.getItem("musicTime");
+  const v = sessionStorage.getItem("musicVolume");
 
-  if (savedTime) music.currentTime = parseFloat(savedTime);
-  music.volume = savedVolume ? parseFloat(savedVolume) : 0.3;
+  if (t) music.currentTime = parseFloat(t);
+  music.volume = v ? parseFloat(v) : 0.3;
 
   music.play().catch(() => {});
 }
@@ -24,9 +22,7 @@ setInterval(() => {
 }, 400);
 
 
-/* =========================
-   💌 LETTER + TYPING EFFECT
-========================= */
+/* 💌 Letter text */
 const text = `
 I don’t really know how to explain this properly,
 so I decided to just be honest instead.
@@ -60,41 +56,27 @@ const cursor = document.getElementById("cursor");
 const buttons = document.getElementById("buttons");
 
 let i = 0;
-const TYPE_SPEED = 140; // ⚡ FAST & SMOOTH
+const TYPE_SPEED = 130; // ⚡ fast
 
 const typing = setInterval(() => {
-  letter.innerHTML += text.charAt(i);
-  i++;
-
+  letter.innerHTML += text.charAt(i++);
   if (i >= text.length) {
     clearInterval(typing);
     cursor.remove();
 
-    // 🌸 Glow last line
     letter.innerHTML = letter.innerHTML.replace(
       "I’d really love to choose you 💕",
       `<span class="last-glow">I’d really love to choose you 💕</span>`
     );
 
-    // 🖼️ Sharpen background photos
-    document
-      .querySelectorAll(".photo")
-      .forEach(p => p.classList.add("focus"));
-
-    // 💕 Show buttons
     buttons.style.opacity = 1;
     buttons.style.transform = "translateY(0)";
   }
 }, TYPE_SPEED);
 
 
-/* =========================
-   💖 YES / 🙈 NO LOGIC
-========================= */
-
-/* YES → hearts → fade music → WhatsApp */
+/* 💖 YES */
 function yes() {
-  // 💕 Hearts
   for (let i = 0; i < 30; i++) {
     const h = document.createElement("div");
     h.className = "heart";
@@ -105,37 +87,31 @@ function yes() {
     setTimeout(() => h.remove(), 3000);
   }
 
-  // 🎶 Fade music out
   fadeMusic(0, 1200);
 
-  // 💬 Auto WhatsApp
   setTimeout(() => {
     window.location.href =
-      "https://wa.me/919746104873?text=" +
-      encodeURIComponent(
-        "I saw your surprise… and my answer is YES 💖🥹"
-      );
+      "https://wa.me/919876543210?text=" +
+      encodeURIComponent("I saw your surprise… and my answer is YES 💖🥹");
   }, 1300);
 }
 
-/* NO → funny responses */
-let noCount = 0;
+
+/* 🙈 NO */
+let n = 0;
 const noTexts = [
   "Are you sure? 🥺",
-  "Read it again 😌",
+  "Read again 😌",
   "That button is shy 🙈",
   "I’ll wait 💕"
 ];
 
 function no() {
-  alert(noTexts[noCount % noTexts.length]);
-  noCount++;
+  alert(noTexts[n++ % noTexts.length]);
 }
 
 
-/* =========================
-   🎶 MUSIC FADE HELPER
-========================= */
+/* 🎶 Fade music */
 function fadeMusic(target, duration) {
   const start = music.volume;
   let step = 0;
