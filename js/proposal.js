@@ -56,7 +56,7 @@ const cursor = document.getElementById("cursor");
 const buttons = document.getElementById("buttons");
 
 let i = 0;
-const TYPE_SPEED = 190; // ⚡ fast
+const TYPE_SPEED = 90; // ⚡ fast
 
 const typing = setInterval(() => {
   letter.innerHTML += text.charAt(i++);
@@ -124,5 +124,6 @@ function fadeMusic(target, duration) {
     if (step >= total) clearInterval(fade);
   }, duration / total);
 }
+
 
 
