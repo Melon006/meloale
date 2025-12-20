@@ -56,7 +56,7 @@ const cursor = document.getElementById("cursor");
 const buttons = document.getElementById("buttons");
 
 let i = 0;
-const TYPE_SPEED = 130; // ⚡ fast
+const TYPE_SPEED = 190; // ⚡ fast
 
 const typing = setInterval(() => {
   letter.innerHTML += text.charAt(i++);
@@ -91,7 +91,7 @@ function yes() {
 
   setTimeout(() => {
     window.location.href =
-      "https://wa.me/919876543210?text=" +
+      "https://wa.me/919746194873?text=" +
       encodeURIComponent("I saw your surprise… and my answer is YES 💖🥹");
   }, 1300);
 }
@@ -124,3 +124,4 @@ function fadeMusic(target, duration) {
     if (step >= total) clearInterval(fade);
   }, duration / total);
 }
+
