@@ -92,7 +92,8 @@ function yes() {
   setTimeout(() => {
     window.location.href =
       "https://wa.me/919746104873?text=" +
-      encodeURIComponent("I saw your surprise… and my answer is YES 💖🥹");
+      encodeURIComponent("I loved your surprise… but I think I deserve a gift now 👀🎁💖"
+");
   }, 1300);
 }
 
@@ -124,6 +125,7 @@ function fadeMusic(target, duration) {
     if (step >= total) clearInterval(fade);
   }, duration / total);
 }
+
 
 
 
