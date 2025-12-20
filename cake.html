@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Make a Wish 💫</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    background: radial-gradient(circle at top, #1a0f08, #000);
+    color: #ffd6a5;
+    font-family: 'Patrick Hand', cursive;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity .8s ease;
+  }
+
+  .card {
+    background: rgba(0,0,0,0.6);
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 520px;
+    box-shadow: 0 0 40px rgba(255,170,80,0.25);
+    animation: fadeUp 1.2s ease;
+  }
+
+  h1 {
+    font-size: 52px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 24px;
+    margin: 14px 0;
+    opacity: 0.9;
+  }
+
+  .hint {
+    margin-top: 30px;
+    font-size: 20px;
+    opacity: 0.7;
+  }
+
+  button {
+    margin-top: 35px;
+    padding: 14px 30px;
+    border-radius: 30px;
+    border: none;
+    background: #ffb703;
+    color: #3b1d00;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255,180,90,0.4);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ✨ floating sparkles */
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffd6a5;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: float 6s linear infinite;
+  }
+
+  @keyframes float {
+    from {
+      transform: translateY(100vh) scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(-20vh) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 42px; }
+    p { font-size: 20px; }
+  }
+</style>
+</head>
+<audio id="bgMusic" src="assets/romantic.mp3" loop></audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+/* ▶️ Start music on FIRST interaction */
+function startMusic() {
+  if (!music) return;
+
+  const savedTime = sessionStorage.getItem("musicTime");
+  const savedVolume = sessionStorage.getItem("musicVolume");
+
+  if (savedTime) music.currentTime = parseFloat(savedTime);
+  music.volume = savedVolume ? parseFloat(savedVolume) : 0.3;
+
+  music.play().catch(() => {});
+}
+
+document.addEventListener("click", startMusic, { once: true });
+document.addEventListener("touchstart", startMusic, { once: true });
+
+/* 💾 Save music state */
+setInterval(() => {
+  if (music && !music.paused) {
+    sessionStorage.setItem("musicTime", music.currentTime);
+    sessionStorage.setItem("musicVolume", music.volume);
+  }
+}, 400);
+</script>
+
+
+<body>
+
+<!-- ✨ Sparkles -->
+<script>
+for (let i = 0; i < 20; i++) {
+  const s = document.createElement("div");
+  s.className = "sparkle";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDelay = Math.random() * 6 + "s";
+  s.style.opacity = Math.random();
+  document.body.appendChild(s);
+}
+</script>
+
+<div class="card">
+  <h1>Make a wish 💫</h1>
+
+  <p>
+    Close your eyes for a second…
+  </p>
+
+  <p>
+    Wish for something that makes you smile.
+  </p>
+
+  <p>
+    Some wishes come true in unexpected ways 😌
+  </p>
+
+  <div class="hint">
+    When you’re ready…
+  </div>
+
+  <button onclick="go()">Continue 💖</button>
+</div>
+
+<script>
+function go() {
+  document.body.style.opacity = 0;
+  setTimeout(() => {
+    location.href = "secret.html";
+  }, 800);
+}
+</script>
+
+</body>
+</html>

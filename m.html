@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    background: black;
+    color: #ffcc66;
+    font-family: 'Patrick Hand', cursive;
+    overflow: hidden;
+    transition: opacity .8s ease;
+  }
+
+  .wrap {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px;
+    gap: 40px;
+  }
+
+  .text {
+    max-width: 520px;
+  }
+
+  h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 28px;
+    margin: 12px 0;
+  }
+
+  .small {
+    margin-top: 40px;
+    font-size: 22px;
+    opacity: 0.7;
+  }
+
+  .name {
+    color: #ff8fa3;
+  }
+
+  .cake-box {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    filter: drop-shadow(0 0 25px rgba(255, 180, 90, 0.35));
+    transition: filter 1s ease;
+  }
+
+  .cake-box.dim {
+    filter: drop-shadow(0 0 8px rgba(255, 120, 60, 0.15));
+  }
+
+  .cake {
+    width: 260px;
+    image-rendering: pixelated;
+  }
+
+  /* 🌙 Subtle dark glow aura */
+  .cake-box::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(circle, rgba(255,170,80,0.18), transparent 70%);
+    opacity: 0.9;
+    z-index: -1;
+    transition: opacity 1s ease;
+  }
+
+  .cake-box.dim::before {
+    opacity: 0.25;
+  }
+
+  /* 📱 Mobile */
+  @media (max-width: 768px) {
+    .wrap {
+      flex-direction: column;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 { font-size: 44px; }
+    p { font-size: 22px; }
+    .cake { width: 200px; }
+  }
+</style>
+</head>
+<audio id="bgMusic" src="assets/romantic.mp3" loop></audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+/* ▶️ Start music on FIRST interaction */
+function startMusic() {
+  if (!music) return;
+
+  const savedTime = sessionStorage.getItem("musicTime");
+  const savedVolume = sessionStorage.getItem("musicVolume");
+
+  if (savedTime) music.currentTime = parseFloat(savedTime);
+  music.volume = savedVolume ? parseFloat(savedVolume) : 0.3;
+
+  music.play().catch(() => {});
+}
+
+document.addEventListener("click", startMusic, { once: true });
+document.addEventListener("touchstart", startMusic, { once: true });
+
+/* 💾 Save music state */
+setInterval(() => {
+  if (music && !music.paused) {
+    sessionStorage.setItem("musicTime", music.currentTime);
+    sessionStorage.setItem("musicVolume", music.volume);
+  }
+}, 400);
+</script>
+
+<body>
+
+<!-- 🎶 Sounds -->
+<audio id="blowSound" src="assets/blow.mp3"></audio>
+<audio id="crackleSound" src="assets/crackle.mp3" loop></audio>
+
+<div class="wrap">
+
+  <div class="text">
+    <h1>Happy Birthday <span class="name">Aleena</span> :)</h1>
+
+    <p>Click the cake :)</p>
+    <p>Then, blow the candle out !</p>
+
+    <p class="small">( 🫶 )</p>
+  </div>
+
+  <div class="cake-box" id="cakeBox" onclick="blow()">
+    <img id="cake" class="cake" src="assets/cake/100.png" alt="cake">
+  </div>
+
+</div>
+
+<script>
+let blown = false;
+
+// 🔥 Flame → off animation frames (your images)
+const frames = [
+  "assets/cake/100.png",
+  "assets/cake/80.png",
+  "assets/cake/60.png",
+  "assets/cake/40.png",
+  "assets/cake/20.png",
+  "assets/cake/cake1.png",
+  "assets/cake/cake2.png",
+  "assets/cake/cake3.png"
+];
+
+function blow() {
+  if (blown) return;
+  blown = true;
+
+  const blowSound = document.getElementById("blowSound");
+  const crackle = document.getElementById("crackleSound");
+  const cake = document.getElementById("cake");
+  const box = document.getElementById("cakeBox");
+
+  blowSound.volume = 0.6;
+  crackle.volume = 0.35;
+
+  blowSound.play();
+  crackle.play();
+
+  let i = 0;
+
+  const anim = setInterval(() => {
+    cake.src = frames[i];
+    i++;
+
+    // 🌙 Gradually dim glow as flame fades
+    if (i === 3) box.classList.add("dim");
+
+    if (i >= frames.length) {
+      clearInterval(anim);
+      crackle.pause();
+      crackle.currentTime = 0;
+
+      // ⏳ Emotional pause → fade → next page
+      setTimeout(() => {
+        document.body.style.opacity = 0;
+        setTimeout(() => {
+          location.href = "cake.html";
+        }, 800);
+      }, 1200);
+    }
+  }, 180);
+}
+</script>
+
+</body>
+</html>

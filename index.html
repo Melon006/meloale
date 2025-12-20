@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For Aleena 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<audio id="bgMusic" src="assets/romantic.mp3" loop></audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+/* ▶️ Start music on FIRST interaction */
+function startMusic() {
+  if (!music) return;
+
+  const savedTime = sessionStorage.getItem("musicTime");
+  const savedVolume = sessionStorage.getItem("musicVolume");
+
+  if (savedTime) music.currentTime = parseFloat(savedTime);
+  music.volume = savedVolume ? parseFloat(savedVolume) : 0.3;
+
+  music.play().catch(() => {});
+}
+
+document.addEventListener("click", startMusic, { once: true });
+document.addEventListener("touchstart", startMusic, { once: true });
+
+/* 💾 Save music state */
+setInterval(() => {
+  if (music && !music.paused) {
+    sessionStorage.setItem("musicTime", music.currentTime);
+    sessionStorage.setItem("musicVolume", music.volume);
+  }
+}, 400);
+</script>
+
+<body>
+
+<div class="container">
+  <h1>A Little Surprise for You, Aleena 🌸</h1>
+  <p id="msg"></p>
+  <h2 id="countdown"></h2>
+</div>
+
+<script src="js/countdown.js"></script>
+</body>
+</html>
