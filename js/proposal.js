@@ -2,6 +2,8 @@
 const music = document.getElementById("bgMusic");
 
 function startMusic() {
+  if (!music) return;
+
   const t = sessionStorage.getItem("musicTime");
   const v = sessionStorage.getItem("musicVolume");
 
@@ -15,7 +17,7 @@ document.addEventListener("click", startMusic, { once: true });
 document.addEventListener("touchstart", startMusic, { once: true });
 
 setInterval(() => {
-  if (!music.paused) {
+  if (music && !music.paused) {
     sessionStorage.setItem("musicTime", music.currentTime);
     sessionStorage.setItem("musicVolume", music.volume);
   }
@@ -56,21 +58,26 @@ const cursor = document.getElementById("cursor");
 const buttons = document.getElementById("buttons");
 
 let i = 0;
-const TYPE_SPEED = 70; // ⚡ fast
+const TYPE_SPEED = 40; // ⚡ faster
 
 const typing = setInterval(() => {
+  if (!letter) return;
+
   letter.innerHTML += text.charAt(i++);
   if (i >= text.length) {
     clearInterval(typing);
-    cursor.remove();
+
+    if (cursor) cursor.remove();
 
     letter.innerHTML = letter.innerHTML.replace(
       "I’d really love to choose you 💕",
       `<span class="last-glow">I’d really love to choose you 💕</span>`
     );
 
-    buttons.style.opacity = 1;
-    buttons.style.transform = "translateY(0)";
+    if (buttons) {
+      buttons.style.opacity = 1;
+      buttons.style.transform = "translateY(0)";
+    }
   }
 }, TYPE_SPEED);
 
@@ -92,8 +99,9 @@ function yes() {
   setTimeout(() => {
     window.location.href =
       "https://wa.me/919746104873?text=" +
-      encodeURIComponent("I loved your surprise… but I think I deserve a gift now 👀🎁💖"
-");
+      encodeURIComponent(
+        "I loved your surprise… but I think I deserve a gift now 👀🎁💖"
+      );
   }, 1300);
 }
 
@@ -114,6 +122,8 @@ function no() {
 
 /* 🎶 Fade music */
 function fadeMusic(target, duration) {
+  if (!music) return;
+
   const start = music.volume;
   let step = 0;
   const total = 30;
