@@ -1,3 +1,5 @@
+alert("proposal.js loaded");
+
 /* 🎶 Continuous music */
 const music = document.getElementById("bgMusic");
 
@@ -135,6 +137,7 @@ function fadeMusic(target, duration) {
     if (step >= total) clearInterval(fade);
   }, duration / total);
 }
+
 
 
 
