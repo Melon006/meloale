@@ -73,8 +73,10 @@ if (textEl) {
         `<span class="last-glow">I’d really love to choose you 💕</span>`
       );
 
-      buttons.style.opacity = 1;
-      buttons.style.transform = "translateY(0)";
+      if (buttons) {
+        buttons.style.opacity = 1;
+        buttons.style.transform = "translateY(0)";
+      }
     }
   }, TYPE_SPEED);
 }
@@ -132,12 +134,3 @@ function fadeMusic(target, duration) {
 }
 
 });
-
-
-
-
-
-
-
-
-
