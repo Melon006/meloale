@@ -1,6 +1,6 @@
-alert("proposal.js loaded");
+document.addEventListener("DOMContentLoaded", () => {
 
-/* 🎶 Continuous music */
+/* 🎶 Music */
 const music = document.getElementById("bgMusic");
 
 function startMusic() {
@@ -25,8 +25,7 @@ setInterval(() => {
   }
 }, 400);
 
-
-/* 💌 Letter text */
+/* 💌 Letter */
 const text = `
 I don’t really know how to explain this properly,
 so I decided to just be honest instead.
@@ -55,37 +54,33 @@ hoping you feel even half of what I feel right now.
 I’d really love to choose you 💕
 `;
 
-const letter = document.getElementById("letter");
+const textEl = document.getElementById("text");
 const cursor = document.getElementById("cursor");
 const buttons = document.getElementById("buttons");
 
 let i = 0;
-const TYPE_SPEED = 40; // ⚡ faster
+const TYPE_SPEED = 40;
 
-const typing = setInterval(() => {
-  if (!letter) return;
+if (textEl) {
+  const typing = setInterval(() => {
+    textEl.textContent += text.charAt(i++);
+    if (i >= text.length) {
+      clearInterval(typing);
+      if (cursor) cursor.remove();
 
-  letter.innerHTML += text.charAt(i++);
-  if (i >= text.length) {
-    clearInterval(typing);
+      textEl.innerHTML = textEl.innerHTML.replace(
+        "I’d really love to choose you 💕",
+        `<span class="last-glow">I’d really love to choose you 💕</span>`
+      );
 
-    if (cursor) cursor.remove();
-
-    letter.innerHTML = letter.innerHTML.replace(
-      "I’d really love to choose you 💕",
-      `<span class="last-glow">I’d really love to choose you 💕</span>`
-    );
-
-    if (buttons) {
       buttons.style.opacity = 1;
       buttons.style.transform = "translateY(0)";
     }
-  }
-}, TYPE_SPEED);
-
+  }, TYPE_SPEED);
+}
 
 /* 💖 YES */
-function yes() {
+window.yes = function () {
   for (let i = 0; i < 30; i++) {
     const h = document.createElement("div");
     h.className = "heart";
@@ -105,8 +100,7 @@ function yes() {
         "I loved your surprise… but I think I deserve a gift now 👀🎁💖"
       );
   }, 1300);
-}
-
+};
 
 /* 🙈 NO */
 let n = 0;
@@ -117,10 +111,9 @@ const noTexts = [
   "I’ll wait 💕"
 ];
 
-function no() {
+window.no = function () {
   alert(noTexts[n++ % noTexts.length]);
-}
-
+};
 
 /* 🎶 Fade music */
 function fadeMusic(target, duration) {
@@ -137,6 +130,10 @@ function fadeMusic(target, duration) {
     if (step >= total) clearInterval(fade);
   }, duration / total);
 }
+
+});
+
+
 
 
 
