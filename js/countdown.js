@@ -1,4 +1,4 @@
-const unlock = new Date("2025-12-21T00:00:00").getTime();
+const unlock = new Date("2025-12-23T00:00:00").getTime();
 const msg = document.getElementById("msg");
 const cd = document.getElementById("countdown");
 
@@ -14,5 +14,6 @@ setInterval(() => {
   if (diff <= 0) location.href = "m.html";
   cd.innerText = Math.floor(diff / 86400000) + " days to go ⏳";
 }, 1000);
+
 
 
