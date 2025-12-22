@@ -99,7 +99,7 @@ window.yes = function () {
     window.location.href =
       "https://wa.me/919746104873?text=" +
       encodeURIComponent(
-        "I loved your surprise… but I think I deserve a gift now 👀🎁💖"
+        "Yess  🥺💖"
       );
   }, 1300);
 };
@@ -134,3 +134,4 @@ function fadeMusic(target, duration) {
 }
 
 });
+
